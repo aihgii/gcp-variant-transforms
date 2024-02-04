@@ -107,7 +107,7 @@ class MergeWithNonVariantsStrategy(variant_merge_strategy.VariantMergeStrategy):
 
     splits = IntervalTree()
     for v in variants:
-      non_variant_interval = non_variant_tree.search(v.start, v.end)
+      non_variant_interval = non_variant_tree.overlap(v.start, v.end)
       if non_variant_interval:
         try:
           non_variant = next(iter(non_variant_interval)).data
@@ -167,7 +167,7 @@ class MergeWithNonVariantsStrategy(variant_merge_strategy.VariantMergeStrategy):
     start = v.start
     end = v.end
     # Increase split size to also combine adjacent splits
-    overlapping_splits = splits.search(v.start - 1, v.end + 1)
+    overlapping_splits = splits.overlap(v.start - 1, v.end + 1)
     if overlapping_splits:
       for split in overlapping_splits:
         splits.remove(split)
@@ -177,7 +177,7 @@ class MergeWithNonVariantsStrategy(variant_merge_strategy.VariantMergeStrategy):
 
   def _split_non_variants(self, non_variant_tree, splits):
     for split in splits:
-      overlapping_non_variants = non_variant_tree.search(split.begin, split.end)
+      overlapping_non_variants = non_variant_tree.overlap(split.begin, split.end)
       for onv_interval in overlapping_non_variants:
         non_variant_tree.remove(onv_interval)
         onv = onv_interval.data

@@ -3,6 +3,7 @@ apache-beam[gcp]==2.53.0
 avro==1.11.3
 google-cloud-core
 google-api-python-client==2.116.0
+intervaltree==3.1.0
 mmh3==4.1.0
 mock==5.1.0
 google-cloud-storage
